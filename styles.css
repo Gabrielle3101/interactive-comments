@@ -1,0 +1,377 @@
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: "Rubik", sans-serif;
+    max-width: 100vw;
+    color: hsl(211, 10%, 45%);
+}
+
+body {
+    min-height: 100vh;
+    min-width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    background-color: hsl(223, 19%, 93%);
+    overflow-x: hidden;
+}
+
+.comments-all, main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: fit-content;    
+    justify-content: center;
+    max-width: 50%;
+}
+
+.comm-wrap {
+    background-color: #fff;
+    max-width: fit-content;    
+
+    width: 100%;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.comm-cont {
+    display: grid;
+    grid-template-columns: auto auto;
+    padding: 10px;
+    height: 100%;
+    position: relative;
+}
+
+.c-score {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    background-color: hsl(223, 19%, 93%);
+    padding: 10px;
+    margin: 10px;
+    border-radius: 8px;
+    grid-row-start: 1;
+    grid-row-end: 3;
+    min-width: 30px;
+    max-height: 80px;
+}
+
+.score-number, .reply-to {
+    color:hsl(238, 40%, 52%);
+    font-weight: 700;
+    font-size: 18px;
+}
+
+.c-controls {
+    position: absolute;
+    top: 10%;
+    right: 7%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: auto;
+}
+
+.c-controls div {
+    display: flex;
+    justify-content: center;
+
+}
+
+button.reply, button.edit, button.delete {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: none;
+    outline: none;
+    background-color: #fff;
+}
+
+#commentTemplate {
+    display: none;
+}
+
+.comm-div .replies .reply-input {
+    display: none; 
+}
+
+
+.c-controls button p {
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.c-controls button {
+    min-width: 25%;
+}
+
+.reply p, .edit p {
+    color: hsl(238, 40%, 52%);
+}
+
+.delete p {
+    color: hsl(358, 79%, 66%);
+}
+
+.you {
+    background-color: hsl(238, 40%, 52%);
+    padding: 7px;
+    color: #fff;
+    margin: 10px 10px 10px 0;
+    border-radius: 5px;
+}
+
+.c-user {
+    display: flex;
+    align-items: center;
+    margin: 10px;
+}
+
+.user-img {
+    width: 40px;
+    margin-right: 15px;
+}
+
+.user-name {
+    font-weight: 700;
+    color: hsl(212, 24%, 26%);
+    margin-right: 15px;
+}
+
+.c-text {
+    margin: 10px;
+    line-height: 30px;
+}
+
+.replies {
+    margin-left: 100px;
+    padding-left: 20px;
+    border-left: 1px solid hsl(211, 10%, 45%);
+}
+
+.reply-input {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-around;
+    background-color: #fff;
+    margin: 20px;
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.comment-section, main {
+    min-width: 80%;
+}
+
+.modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 30px;
+    background-color: #fff;
+    width: 400px;
+    border-radius: 10px;
+    z-index: 1000
+}
+
+.modal p {
+    line-height: 20px;
+    margin: 20px;
+}
+
+.btns {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    margin: 20px;
+}
+
+h3 {
+    color: hsl(212, 24%, 26%);
+    width: 100%;
+    margin: 20px 0 0 40px;
+    font-size: 20px;
+}
+
+.yes {
+    background-color: hsl(358, 79%, 66%) !important;
+}
+
+.no {
+    background-color: hsl(212, 24%, 26%) !important;
+}
+
+.invisible {
+    display: none;
+}
+
+.modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+  }
+  
+
+.comment-input {
+    height: 80px;
+    width: 70%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid hsl(223, 19%, 93%);
+    border-radius: 7px;
+}
+
+.primary-button, .yes, .no {
+    background-color: hsl(238, 40%, 52%);
+    padding: 20px 30px;
+    border-radius: 7px;
+    border: none;
+    color: #fff;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+button, .score-control, .reply, .delete, .edit {
+    cursor: pointer;
+}
+
+button:hover, .reply:hover, .delete:hover, .edit:hover {
+    opacity: 80%;
+}
+
+textarea:focus {
+    border: 2px solid hsl(238, 40%, 52%);
+    outline: none;
+}
+
+
+@media only screen and (max-width: 1440px) {
+    .comm-div textarea {
+        width: 60%;
+    }
+    .comm-div .primary-button {
+        font-size: 14px;
+        padding: 10px 10px;
+    }
+    .comments-all {
+        min-width: 65%;    
+    }
+}
+
+@media only screen and (max-width: 1100px) {
+    .comments-all {
+        max-width: 80%;
+    }
+}
+
+@media only screen and (max-width: 900px) {
+    .replies {
+        border: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .comment-section, .reply-input {
+        width: 100%;
+    }
+
+    .comms-wrap {
+        margin: 20px 0;
+    }
+
+    .comm-cont {
+        padding: 0;
+    }
+}
+
+@media only screen and (max-width: 800px) {
+    .c-score {
+        grid-row-start: 3;
+        width: 200px;
+        flex-direction: row
+    }
+
+    .c-user, .c-text {
+        grid-column: span 2;
+    }
+
+    .c-controls {
+        bottom: 10%;
+        top: 90%;
+    }
+
+    .reply-input {
+        margin: 0;
+    }
+
+    .comment-section textarea {
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width:600px) {
+    .c-score {
+        width: 100px;
+    }
+
+    .reply-input {
+        display: grid;
+        width: 90%;
+    }
+
+    .comment-section textarea {
+        grid-column-start: 1;
+        grid-row-start: 1;
+        grid-column: span 2;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    .primary-button {
+        padding: 7px 10px;
+    }
+}
+
+@media only screen and (max-width:490px) {
+    .comm-wrap {
+        margin: 20px 0;
+    }
+
+    .c-user {
+        margin: 0;
+    }
+
+    .user-name, .user-img {
+        margin-right: 5px;
+    }
+
+    .modal {
+        width: 250px;
+        height: 200px;
+    }
+
+    .modal button {
+        font-size: 12px;
+        padding: 7px 10px;
+    }
+}
+
+@media only screen and (max-width:400px) {
+    .c-controls {
+        top: 70%;
+    }
+}
