@@ -59,39 +59,47 @@ document.addEventListener("DOMContentLoaded", () => {
       });
   
       // Reply
+      const replyBox = comment.querySelector(".reply-input");
+
       replyBtn?.addEventListener("click", () => {
-        const replyBox = comment.querySelector(".reply-input");
-        if (replyBox) replyBox.style.display = "flex";
+        if (!replyBox) return;
+      
+        const isVisible = replyBox.style.display === "flex";
+      
+        replyBox.style.display = isVisible ? "none" : "flex";
+        replyBtn.textContent = isVisible ? "Reply" : "Cancel";
       });
+      
 
-        // // Edit
-        // const editBtn = comment.querySelector(".edit");
-        // const commentBody = comment.querySelector(".c-body");
-
-        // editBtn?.addEventListener("click", () => {
-        // const isEditing = editBtn.textContent.toLowerCase() === "save";
-
-        // if (isEditing) {
-        //     // Save the edited comment
-        //     const textarea = comment.querySelector(".comment-input");
-        //     if (textarea) {
-        //     commentBody.textContent = textarea.value.trim() || commentBody.textContent;
-        //     textarea.remove();
-        //     commentBody.style.display = "block";
-        //     editBtn.textContent = "Edit";
-        //     }
-        // } else {
-        //     // Switch to edit mode
-        //     const textarea = document.createElement("textarea");
-        //     textarea.className = "comment-input";
-        //     textarea.value = commentBody.textContent;
-
-
-        //     commentBody.style.display = "none";
-        //     commentBody.insertAdjacentElement("afterend", textarea);
-        //     editBtn.textContent = "Editing";
-        // }
-    // });
+        // Edit
+        const editBtn = comment.querySelector(".edit");
+        const commentBody = comment.querySelector(".c-text");
+        
+        editBtn?.addEventListener("click", () => {
+          const existingTextarea = comment.querySelector(".comment-input");
+          const isEditing = !!existingTextarea;
+        
+          if (isEditing) {
+            // Save the edited comment
+            const newText = existingTextarea.value.trim();
+            if (newText) {
+              commentBody.textContent = newText;
+            }
+            existingTextarea.remove();
+            commentBody.style.display = "block";
+            editBtn.textContent = "Edit";
+          } else {
+            // Switch to edit mode
+            const textarea = document.createElement("textarea");
+            textarea.className = "comment-input";
+            textarea.value = commentBody.textContent;
+        
+            commentBody.style.display = "none";
+            commentBody.insertAdjacentElement("afterend", textarea);
+            textarea.focus();
+            editBtn.textContent = "Save";
+          }
+        });
     }
   
     //===========================
@@ -144,6 +152,52 @@ document.addEventListener("DOMContentLoaded", () => {
       backdrop.style.display = "none";
       commentToDelete = null;
     });
+
+    function closeModal() {
+      modal.style.display = "none";
+      backdrop.style.display = "none";
+      commentToDelete = null;
+    }
+    
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        closeModal();
+      }
+    });
+
+    function trapFocus(modal) {
+      const focusableSelectors = [
+        'button',
+        'a[href]',
+        'input',
+        'textarea',
+        'select',
+        '[tabindex]:not([tabindex="-1"])'
+      ];
+      const focusableElements = modal.querySelectorAll(focusableSelectors.join(','));
+      const firstEl = focusableElements[0];
+      const lastEl = focusableElements[focusableElements.length - 1];
+    
+      modal.addEventListener("keydown", (e) => {
+        if (e.key !== "Tab") return;
+    
+        if (e.shiftKey) {
+          // Shift + Tab
+          if (document.activeElement === firstEl) {
+            e.preventDefault();
+            lastEl.focus();
+          }
+        } else {
+          // Tab
+          if (document.activeElement === lastEl) {
+            e.preventDefault();
+            firstEl.focus();
+          }
+        }
+      });
+    }
+    trapFocus(modal);
+    firstEl.focus();
   });
 
 
