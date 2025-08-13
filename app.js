@@ -60,27 +60,50 @@ document.addEventListener("DOMContentLoaded", () => {
   
       // Reply
       const replyBox = comment.querySelector(".reply-input");
+      const sendReplyBtn = replyBox?.querySelector(".send-reply");
+      const replyTextarea = replyBox?.querySelector(".reply-textarea");
 
       replyBtn?.addEventListener("click", () => {
         if (!replyBox) return;
-      
+
         const isVisible = replyBox.style.display === "flex";
-      
         replyBox.style.display = isVisible ? "none" : "flex";
         replyBtn.textContent = isVisible ? "Reply" : "Cancel";
+      });
+
+      sendReplyBtn?.addEventListener("click", () => {
+        const replyText = replyTextarea?.value.trim();
+        if (!replyText) {
+          alert("Please enter a reply before sending.");
+          return;
+        }
+
+        const replyComment = template.cloneNode(true);
+        replyComment.style.display = "block";
+        replyComment.querySelector(".c-body").textContent = replyText;
+
+        comment.insertAdjacentElement("afterend", replyComment);
+
+        replyTextarea.value = "";
+        replyBox.style.display = "none";
+        replyBtn.textContent = "Reply";
+
+        attachCommentListeners(replyComment);
       });
       
 
         // Edit
         const editBtn = comment.querySelector(".edit");
-        const commentBody = comment.querySelector(".c-text");
         
         editBtn?.addEventListener("click", () => {
-          const existingTextarea = comment.querySelector(".comment-input");
+          const currentComment = editBtn.closest(".comm-div");
+          if (!currentComment) return;
+
+          const commentBody = currentComment.querySelector(".c-text");
+          const existingTextarea = currentComment.querySelector(".comment-input");
           const isEditing = !!existingTextarea;
         
           if (isEditing) {
-            // Save the edited comment
             const newText = existingTextarea.value.trim();
             if (newText) {
               commentBody.textContent = newText;
@@ -89,7 +112,6 @@ document.addEventListener("DOMContentLoaded", () => {
             commentBody.style.display = "block";
             editBtn.textContent = "Edit";
           } else {
-            // Switch to edit mode
             const textarea = document.createElement("textarea");
             textarea.className = "comment-input";
             textarea.value = commentBody.textContent;
@@ -99,6 +121,7 @@ document.addEventListener("DOMContentLoaded", () => {
             textarea.focus();
             editBtn.textContent = "Save";
           }
+          console.log(existingTextarea);
         });
     }
   
