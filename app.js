@@ -137,7 +137,6 @@ document.addEventListener("DOMContentLoaded", () => {
       btn.addEventListener("click", () => {
         const text = commentInput.value.trim();
         if (text === "") {
-          alert("Please enter a comment before sending.");
           return;
         }
   
