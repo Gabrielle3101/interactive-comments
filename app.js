@@ -102,25 +102,33 @@ document.addEventListener("DOMContentLoaded", () => {
           const commentBody = currentComment.querySelector(".c-text");
           const existingTextarea = currentComment.querySelector(".comment-input");
           const isEditing = !!existingTextarea;
+
+          console.log({existingTextarea})
         
           if (isEditing) {
             const newText = existingTextarea.value.trim();
+            console.log({newText})
             if (newText) {
               commentBody.textContent = newText;
             }
             existingTextarea.remove();
+            existingTextarea.style.whitespace = "normal"
             commentBody.style.display = "block";
             editBtn.textContent = "Edit";
           } else {
-            const textarea = document.createElement("textarea");
-            textarea.className = "comment-input";
-            textarea.value = commentBody.textContent;
-        
-            commentBody.style.display = "none";
-            commentBody.insertAdjacentElement("afterend", textarea);
+            commentBody.insertAdjacentHTML("afterend", `
+              <textarea class="comment-input">${commentBody.textContent}</textarea>
+            `);
+            const textarea = commentBody.nextElementSibling;
             textarea.focus();
+
+            textarea.style.whitespace = "normal"
+            textarea.value = textarea.value.trim();
+            
+            commentBody.style.display = "none";
             editBtn.textContent = "Save";
           }
+
           console.log(existingTextarea);
         });
     }
